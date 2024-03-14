@@ -1,56 +1,43 @@
-import { SafeAreaView, StyleSheet, Text, Image, Button } from "react-native";
-import React, { useContext, useEffect, useState } from "react";
-import { ProductDTO } from "../types/Products";
+import React, { useContext } from "react";
+import { SafeAreaView, StyleSheet, Text, Image, Button, View } from "react-native";
 import { CartContext } from "../contexts/CartContext";
 import { useRoute } from "@react-navigation/native";
+import { ProductDTO } from "../types/Products";
 
 const Details = () => {
-  const route = useRoute()
-  const { title,
-    description,
-    price,
-    images } = route.params as ProductDTO
+  const route = useRoute();
+  const { title, description, price, images } = route.params as ProductDTO;
   const { addProduct } = useContext(CartContext);
 
   return (
     <SafeAreaView style={styles.container}>
-      <Image style={{ width: '50%', height: 100, borderRadius: 5  }} source={{ uri: images[0] }} />
-      <Text style={styles.informacoes}>
-        {title}
-        {description}
-        {price}
-      </Text>
-      <Button title="Adicionar" onPress={() => addProduct(route.params as ProductDTO)} />
+      
+        <Image resizeMode="center"
+          style={{ width: "100%", height: 100, margin: 20, borderRadius: 20}}
+          source={{ uri: images[0] }} 
+        />
+        <Text style={styles.infoText}>{title}</Text>
+        <Text style={styles.infoText}>{description}</Text>
+        <Text style={styles.infoText}>Price: {price}</Text>
+        <Button title="Adicionar" onPress={() => addProduct(route.params as ProductDTO)} />
+      
     </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    display: "flex",
+    flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    marginHorizontal: 10,
+    paddingHorizontal: 10,
   },
-  button: {
-    width: "100%",
-    height: 50,
-    backgroundColor: "#606060",
-    justifyContent: "center",
-    alignItems: "center",
-    marginVertical: 12,
+  
+
+  infoText: {
+    fontSize: 18,
+    marginBottom: 10,
   },
-  buttonText: {
-    color: "#fff",
-  },
-  title: {
-    color: "#252525",
-    fontSize: 26,
-    fontWeight: "bold",
-  },
-  informacoes: {
-    display: "flex",
-  }
 });
 
 export default Details;
